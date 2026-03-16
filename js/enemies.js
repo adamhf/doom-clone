@@ -229,7 +229,7 @@ class Enemy {
             const checkY = Math.floor(this.y + stepY * i);
             if (checkY >= 0 && checkY < map.length && checkX >= 0 && checkX < map[0].length) {
                 const cell = map[checkY][checkX];
-                if (cell > 0 && cell !== WALL_DOOR) return false;
+                if (cell > 0) return false;
             }
         }
         return true;

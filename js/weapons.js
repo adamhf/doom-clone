@@ -160,7 +160,7 @@ class WeaponSystem {
             const checkX = Math.floor(player.x + stepX * i);
             const checkY = Math.floor(player.y + stepY * i);
             if (checkY >= 0 && checkY < map.length && checkX >= 0 && checkX < map[0].length) {
-                if (map[checkY][checkX] > 0 && map[checkY][checkX] !== WALL_DOOR) {
+                if (map[checkY][checkX] > 0) {
                     return true;
                 }
             }
