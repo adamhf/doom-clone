@@ -1,0 +1,289 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    background: #000;
+    overflow: hidden;
+    font-family: 'Courier New', monospace;
+    color: #fff;
+    cursor: none;
+}
+
+#game-container {
+    position: relative;
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#game-canvas {
+    display: block;
+    image-rendering: pixelated;
+    width: 100vw;
+    height: 100vh;
+}
+
+/* Title Screen */
+#title-screen {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background: rgba(0, 0, 0, 0.85);
+    z-index: 10;
+}
+
+#title-screen h1 {
+    font-size: 8rem;
+    color: #c00;
+    text-shadow: 0 0 30px #f00, 0 0 60px #900;
+    letter-spacing: 0.3em;
+    animation: flicker 3s infinite alternate;
+}
+
+#title-screen h2 {
+    font-size: 3rem;
+    color: #888;
+    letter-spacing: 0.5em;
+    margin-top: -1rem;
+}
+
+.subtitle {
+    color: #666;
+    margin-top: 1rem;
+    font-size: 1.1rem;
+}
+
+@keyframes flicker {
+    0%, 90%, 100% { opacity: 1; }
+    92% { opacity: 0.8; }
+    94% { opacity: 1; }
+    96% { opacity: 0.7; }
+    98% { opacity: 1; }
+}
+
+.menu {
+    margin-top: 3rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.menu-btn {
+    font-family: 'Courier New', monospace;
+    font-size: 1.5rem;
+    padding: 0.8rem 3rem;
+    background: transparent;
+    color: #c00;
+    border: 2px solid #c00;
+    cursor: pointer;
+    letter-spacing: 0.2em;
+    transition: all 0.2s;
+}
+
+.menu-btn:hover {
+    background: #c00;
+    color: #fff;
+    box-shadow: 0 0 20px rgba(200, 0, 0, 0.5);
+}
+
+#controls-info {
+    margin-top: 2rem;
+    text-align: left;
+    line-height: 2;
+    color: #aaa;
+}
+
+/* HUD */
+#hud {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    padding: 1rem 2rem;
+    background: linear-gradient(transparent, rgba(0, 0, 0, 0.7));
+    z-index: 5;
+    pointer-events: none;
+}
+
+#hud-left, #hud-right {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+#hud-center {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+}
+
+#crosshair {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 1.5rem;
+    color: rgba(255, 255, 255, 0.6);
+    text-shadow: 0 0 5px rgba(255, 255, 255, 0.3);
+    z-index: 6;
+}
+
+#weapon-display {
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 300px;
+    height: 300px;
+    z-index: 5;
+}
+
+#damage-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: radial-gradient(ellipse at center, transparent 40%, rgba(255, 0, 0, 0.4));
+    pointer-events: none;
+    z-index: 4;
+    animation: damage-fade 0.3s forwards;
+}
+
+@keyframes damage-fade {
+    from { opacity: 1; }
+    to { opacity: 0; }
+}
+
+.hud-item {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.hud-label {
+    font-size: 0.8rem;
+    color: #888;
+    width: 60px;
+}
+
+.hud-bar {
+    width: 120px;
+    height: 12px;
+    background: #333;
+    border: 1px solid #555;
+}
+
+.bar-fill {
+    height: 100%;
+    transition: width 0.3s;
+}
+
+.health-fill {
+    background: linear-gradient(to right, #c00, #f00);
+    width: 100%;
+}
+
+.armor-fill {
+    background: linear-gradient(to right, #00a, #00f);
+    width: 0%;
+}
+
+.hud-value {
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: #fff;
+    min-width: 40px;
+    text-align: right;
+}
+
+.ammo-text {
+    color: #ff0;
+}
+
+.weapon-text {
+    color: #0f0;
+    font-size: 1rem;
+}
+
+/* Minimap */
+#minimap-container {
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+    border: 2px solid #444;
+    background: rgba(0, 0, 0, 0.7);
+    z-index: 5;
+}
+
+#minimap-canvas {
+    display: block;
+}
+
+/* Messages */
+#message-display {
+    position: absolute;
+    top: 20%;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 1.5rem;
+    color: #ff0;
+    text-shadow: 0 0 10px rgba(255, 255, 0, 0.5);
+    z-index: 6;
+    transition: opacity 0.5s;
+}
+
+/* Level Complete / Game Over */
+#level-complete, #game-over, #game-won {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background: rgba(0, 0, 0, 0.85);
+    z-index: 10;
+}
+
+#level-complete h2, #game-won h2 {
+    font-size: 4rem;
+    color: #0f0;
+    text-shadow: 0 0 20px rgba(0, 255, 0, 0.5);
+}
+
+#game-over h2 {
+    font-size: 5rem;
+    color: #c00;
+    text-shadow: 0 0 30px #f00;
+}
+
+#level-complete p, #game-over p, #game-won p {
+    margin-top: 1rem;
+    color: #aaa;
+    font-size: 1.2rem;
+}
+
+.hidden {
+    display: none !important;
+}
